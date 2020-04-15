@@ -96,6 +96,7 @@ class News(TimeStampedModel):
     class Meta:
         abstract = True
         verbose_name_plural = "news"
+        ordering = ["position"]
 
     def __str__(self):
         return self.title or "Sans titre"
