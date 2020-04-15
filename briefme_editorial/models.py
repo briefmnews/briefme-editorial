@@ -9,6 +9,7 @@ from model_utils import Choices
 from tinymce.models import HTMLField
 
 from .constants import TEMPLATE_CHOICES
+from .utils import apply_func_to_dict, add_target_blank_to_links
 
 
 class Publication(models.Model):
@@ -102,3 +103,12 @@ class News(TimeStampedModel):
     @property
     def published_at(self):
         return self.issue.published_at
+
+    def _add_target_blank(self):
+        self.data = apply_func_to_dict(
+            self.data, self.get_html_data_fields(), add_target_blank_to_links
+        )
+
+    def save(self, *args, **kwargs):
+        self._add_target_blank()
+        super().save(*args, **kwargs)
