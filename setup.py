@@ -11,7 +11,13 @@ setup(
         "briefme_editorial"
     ],
     python_requires=">=3.7",
-    install_requires=["Django>=2.2", "django-model-utils>=3.2.0", "django-tinymce>=2.7.0"],
+    install_requires=[
+        "Django>=2.2",
+        "django-model-utils>=3.2.0",
+        "django-tinymce>=2.7.0",
+        "django-reactive>=0.1.5"
+    ],
+    dependency_links=["https://github.com/briefmnews/django-reactive"],
     classifiers=[
         "Environment :: Web Environment",
         "Framework :: Django",
