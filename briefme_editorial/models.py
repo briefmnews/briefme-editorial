@@ -3,6 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.html import format_html
 
+from django_reactive.fields import ReactJSONSchemaField, TemplateField
 from model_utils.models import StatusModel, TimeStampedModel
 from model_utils.fields import MonitorField
 from model_utils import Choices
@@ -86,10 +87,14 @@ class Section(TimeStampedModel):
 
 
 class News(TimeStampedModel):
+    TEMPLATES = []
+
     title = models.CharField(max_length=200, blank=True)
     desc = models.CharField(max_length=100, blank=True)
     source = models.CharField(max_length=255, blank=True)
     position = models.PositiveSmallIntegerField("Position")
+    template = TemplateField(templates=TEMPLATES, max_length=200)
+    data = ReactJSONSchemaField(template="template", blank=True)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
 
