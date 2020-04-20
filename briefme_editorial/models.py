@@ -88,6 +88,9 @@ class Section(TimeStampedModel):
 
 class News(TimeStampedModel):
     TEMPLATES = []
+    HTML_DATA_FIELDS = {}
+    SEARCHABLE_DATA_FIELDS = {}
+    TYPOGRAPHIE_DATA_FIELDS = {}
 
     title = models.CharField(max_length=200, blank=True)
     desc = models.CharField(max_length=100, blank=True)
@@ -114,6 +117,15 @@ class News(TimeStampedModel):
         self.data = apply_func_to_dict(
             self.data, self.get_html_data_fields(), add_target_blank_to_links
         )
+
+    def get_typographie_data_fields(self):
+        return self.TYPOGRAPHIE_DATA_FIELDS.get(self.template, [])
+
+    def get_searchable_data_fields(self):
+        return self.SEARCHABLE_DATA_FIELDS.get(self.template, [])
+
+    def get_html_data_fields(self):
+        return self.HTML_DATA_FIELDS.get(self.template, [])
 
     def save(self, *args, **kwargs):
         self._add_target_blank()
