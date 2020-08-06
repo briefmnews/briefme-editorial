@@ -13,21 +13,6 @@ from .constants import TEMPLATE_CHOICES
 from .utils import apply_func_to_dict, add_target_blank_to_links
 
 
-class Publication(models.Model):
-    """
-    The model that manages all publications: daily, weekend, poll, making-of...
-    """
-
-    name = models.CharField(max_length=128)
-    description = models.TextField()
-
-    class Meta:
-        abstract = True
-
-    def __str__(self):
-        return self.name
-
-
 class Issue(TimeStampedModel, StatusModel):
     """
     The model that manages the issue of a title
@@ -35,9 +20,6 @@ class Issue(TimeStampedModel, StatusModel):
 
     STATUS = Choices("draft", "pending", "published")
     title = models.CharField(max_length=200)
-    publication = models.ForeignKey(
-        Publication, default=settings.DEFAULT_PUBLICATION, on_delete=models.CASCADE
-    )
     template = models.CharField(max_length=6, choices=TEMPLATE_CHOICES, default="new")
     intro = HTMLField(blank=True, null=True)
     outro = HTMLField(blank=True, null=True)
