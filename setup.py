@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="briefme-editorial",
-    version="0.0.3",
+    version="1.0.0",
     description="Asbtract editorial base for Brief.me projects",
     url="https://github.com/briefmnews/briefme-editorial",
     author="Brief.me",
