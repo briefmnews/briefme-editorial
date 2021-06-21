@@ -14,15 +14,14 @@ from .utils import apply_func_to_dict, add_target_blank_to_links
 
 
 class Issue(TimeStampedModel, StatusModel):
-    """
-    The model that manages the issue of a title
-    """
-
     STATUS = Choices("draft", "pending", "published")
     title = models.CharField(max_length=200)
     template = models.CharField(max_length=6, choices=TEMPLATE_CHOICES, default="new")
     intro = HTMLField(blank=True, null=True)
+    post_scriptum_intro = HTMLField(null=True, blank=True)
     outro = HTMLField(blank=True, null=True)
+    authors = HTMLField(null=True, blank=True)
+    post_scriptum_outro = HTMLField(null=True, blank=True)
     published_at = MonitorField(monitor="status", when=["published"])
     pushed = models.BooleanField(default=False)
     pushed_at = MonitorField(monitor="pushed", when=[True])
