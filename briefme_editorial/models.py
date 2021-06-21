@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
-from django.utils.html import format_html
 
 from django_reactive.fields import ReactJSONSchemaField, TemplateField
 from model_utils.models import StatusModel, TimeStampedModel
@@ -35,21 +34,6 @@ class Issue(TimeStampedModel, StatusModel):
     def get_email_url(self):
         kwargs = {"pk": self.pk}
         return "%s%s" % (settings.SITE_DOMAIN, reverse("issue_detail_email", kwargs=kwargs))
-
-    def email_content_iframe(self):
-        try:
-            url = self.get_email_url()
-            html = '<iframe src="{}" \
-                width="750" height="1000" style="background:#ffffff">\
-                </iframe>'.format(
-                url
-            )
-            return format_html(html)
-        except Exception:
-            return (
-                "<p>Vous pourrez prévisualiser le "
-                + "contenu une fois que vous l'aurez sauvé.</p>"
-            )
 
     def publish(self):
         self.status = self.STATUS.published
