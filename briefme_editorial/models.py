@@ -39,6 +39,9 @@ class Issue(TimeStampedModel, StatusModel):
         self.status = self.STATUS.published
         self.save()
 
+    def get_news(self):
+        return self.news.order_by("position").all()
+
 
 class Section(TimeStampedModel):
     title = models.CharField(max_length=200)
